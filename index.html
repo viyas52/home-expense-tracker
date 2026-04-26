@@ -5,61 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Home Expenses</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#2563eb">
+    <meta name="theme-color" content="#4f46e5">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --blue: #2563eb;
-            --blue-light: #eff6ff;
-            --green: #16a34a;
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #eef2ff;
+            --primary-50: #e0e7ff;
+            --green: #059669;
+            --green-light: #ecfdf5;
             --amber: #d97706;
+            --amber-light: #fffbeb;
             --red: #dc2626;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --gray-700: #374151;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            --radius: 12px;
-            --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+            --red-light: #fef2f2;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--gray-50);
             color: var(--gray-800);
             min-height: 100vh;
-            padding-bottom: 80px;
+            padding-bottom: 88px;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* ─── Header ─── */
         .header {
-            background: white;
-            border-bottom: 1px solid var(--gray-200);
-            padding: 16px 20px;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #a855f7 100%);
+            padding: 24px 20px 28px;
             position: sticky;
             top: 0;
             z-index: 100;
+            color: white;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
         }
         .header h1 {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--gray-900);
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+        }
+        .header-badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
         }
         .header p {
             font-size: 13px;
-            color: var(--gray-500);
-            margin-top: 2px;
+            opacity: 0.85;
+            font-weight: 400;
         }
 
         /* ─── Bottom Tab Bar ─── */
@@ -72,29 +95,52 @@
             border-top: 1px solid var(--gray-200);
             display: flex;
             justify-content: space-around;
-            padding: 8px 0 env(safe-area-inset-bottom, 8px);
+            padding: 6px 0 env(safe-area-inset-bottom, 8px);
             z-index: 100;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
         }
         .tab-btn {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             background: none;
             border: none;
-            padding: 6px 16px;
+            padding: 8px 20px;
             cursor: pointer;
             color: var(--gray-400);
             font-size: 11px;
-            font-weight: 500;
-            transition: color 0.2s;
+            font-weight: 600;
+            transition: all 0.2s;
+            position: relative;
         }
-        .tab-btn.active { color: var(--blue); }
-        .tab-btn svg { width: 24px; height: 24px; }
+        .tab-btn.active { color: var(--primary); }
+        .tab-btn.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 0 0 3px 3px;
+        }
+        .tab-btn svg { width: 22px; height: 22px; }
 
         /* ─── Tab Content ─── */
-        .tab-content { display: none; padding: 20px; max-width: 600px; margin: 0 auto; }
+        .tab-content {
+            display: none;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeIn 0.3s ease;
+        }
         .tab-content.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         /* ─── Cards ─── */
         .card {
@@ -103,14 +149,17 @@
             box-shadow: var(--shadow);
             padding: 20px;
             margin-bottom: 16px;
+            border: 1px solid var(--gray-100);
+            transition: box-shadow 0.2s;
         }
+        .card:hover { box-shadow: var(--shadow-md); }
         .card-title {
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 700;
             color: var(--gray-500);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 12px;
+            letter-spacing: 0.8px;
+            margin-bottom: 14px;
         }
 
         /* ─── Metric Cards ─── */
@@ -124,62 +173,134 @@
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 16px;
+            padding: 18px;
+            border: 1px solid var(--gray-100);
+            position: relative;
+            overflow: hidden;
         }
+        .metric-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+        .metric-card:nth-child(1)::after { background: var(--primary); }
+        .metric-card:nth-child(2)::after { background: var(--amber); }
+        .metric-card:nth-child(3)::after { background: var(--green); }
+        .metric-card:nth-child(4)::after { background: var(--gray-400); }
+        .metric-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .metric-card:nth-child(1) .metric-icon { background: var(--primary-light); }
+        .metric-card:nth-child(2) .metric-icon { background: var(--amber-light); }
+        .metric-card:nth-child(3) .metric-icon { background: var(--green-light); }
+        .metric-card:nth-child(4) .metric-icon { background: var(--gray-100); }
         .metric-label {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--gray-500);
-            font-weight: 500;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 4px;
         }
         .metric-value {
-            font-size: 24px;
-            font-weight: 700;
+            font-size: 26px;
+            font-weight: 800;
             color: var(--gray-900);
+            letter-spacing: -0.5px;
         }
         .metric-value.green { color: var(--green); }
         .metric-value.amber { color: var(--amber); }
         .metric-value.red { color: var(--red); }
 
         /* ─── Progress Bar ─── */
-        .progress-container { margin-bottom: 16px; }
+        .progress-card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 18px;
+            margin-bottom: 16px;
+            border: 1px solid var(--gray-100);
+        }
         .progress-bar-bg {
-            height: 10px;
-            background: var(--gray-200);
-            border-radius: 5px;
+            height: 12px;
+            background: var(--gray-100);
+            border-radius: 6px;
             overflow: hidden;
         }
         .progress-bar-fill {
             height: 100%;
-            border-radius: 5px;
-            transition: width 0.5s ease, background 0.3s;
+            border-radius: 6px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
+            background: linear-gradient(90deg, var(--primary), #7c3aed);
         }
+        .progress-bar-fill.warning { background: linear-gradient(90deg, var(--amber), #f59e0b); }
+        .progress-bar-fill.danger { background: linear-gradient(90deg, var(--red), #ef4444); }
         .progress-label {
             display: flex;
             justify-content: space-between;
-            font-size: 12px;
+            font-size: 13px;
             color: var(--gray-500);
-            margin-top: 6px;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+        .progress-pct {
+            font-weight: 700;
+            color: var(--gray-800);
         }
 
         /* ─── Upload Area ─── */
         .upload-area {
             border: 2px dashed var(--gray-300);
             border-radius: var(--radius);
-            padding: 40px 20px;
+            padding: 48px 20px;
             text-align: center;
             cursor: pointer;
-            transition: border-color 0.2s, background 0.2s;
+            transition: all 0.3s;
             background: white;
             margin-bottom: 16px;
         }
         .upload-area:hover, .upload-area.dragover {
-            border-color: var(--blue);
-            background: var(--blue-light);
+            border-color: var(--primary);
+            background: var(--primary-light);
+            transform: scale(1.01);
         }
-        .upload-area svg { width: 48px; height: 48px; color: var(--gray-400); margin-bottom: 12px; }
-        .upload-area p { color: var(--gray-500); font-size: 14px; }
-        .upload-area .hint { font-size: 12px; color: var(--gray-400); margin-top: 8px; }
+        .upload-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--primary-light);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+        .upload-icon svg { width: 28px; height: 28px; color: var(--primary); }
+        .upload-area h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-800);
+            margin-bottom: 4px;
+        }
+        .upload-area p { color: var(--gray-500); font-size: 13px; }
+        .upload-area .hint {
+            font-size: 12px;
+            color: var(--gray-400);
+            margin-top: 8px;
+            background: var(--gray-100);
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
         #file-input { display: none; }
 
         /* ─── Image Preview ─── */
@@ -193,11 +314,12 @@
             object-fit: contain;
             border-radius: var(--radius);
             border: 1px solid var(--gray-200);
+            background: var(--gray-100);
         }
         .image-preview .actions {
             display: flex;
-            gap: 8px;
-            margin-top: 12px;
+            gap: 10px;
+            margin-top: 14px;
         }
 
         /* ─── Buttons ─── */
@@ -205,107 +327,140 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            padding: 10px 20px;
-            border-radius: 8px;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             border: none;
             cursor: pointer;
             transition: all 0.2s;
+            letter-spacing: 0.2px;
         }
+        .btn:active { transform: scale(0.97); }
         .btn-primary {
-            background: var(--blue);
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
             color: white;
+            box-shadow: 0 2px 8px rgba(79,70,229,0.3);
         }
-        .btn-primary:hover { background: #1d4ed8; }
-        .btn-primary:disabled { background: var(--gray-300); cursor: not-allowed; }
+        .btn-primary:hover { box-shadow: 0 4px 12px rgba(79,70,229,0.4); transform: translateY(-1px); }
+        .btn-primary:disabled { background: var(--gray-300); box-shadow: none; cursor: not-allowed; transform: none; }
         .btn-secondary {
             background: var(--gray-100);
             color: var(--gray-700);
         }
         .btn-secondary:hover { background: var(--gray-200); }
         .btn-success {
-            background: var(--green);
+            background: linear-gradient(135deg, var(--green), #10b981);
             color: white;
+            box-shadow: 0 2px 8px rgba(5,150,105,0.3);
         }
-        .btn-success:hover { background: #15803d; }
+        .btn-success:hover { box-shadow: 0 4px 12px rgba(5,150,105,0.4); transform: translateY(-1px); }
         .btn-danger {
             background: white;
             color: var(--red);
             border: 1px solid var(--gray-200);
         }
-        .btn-danger:hover { background: #fef2f2; }
+        .btn-danger:hover { background: var(--red-light); border-color: var(--red); }
         .btn-full { width: 100%; }
 
         /* ─── Loading Spinner ─── */
         .spinner {
             display: none;
             text-align: center;
-            padding: 40px;
+            padding: 48px 20px;
         }
         .spinner.active { display: block; }
-        .spinner-circle {
-            width: 40px;
-            height: 40px;
-            border: 3px solid var(--gray-200);
-            border-top-color: var(--blue);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto 12px;
+        .spinner-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 16px;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .spinner p { color: var(--gray-500); font-size: 14px; }
+        .spinner-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: bounce 1.4s ease-in-out infinite;
+        }
+        .spinner-dot:nth-child(2) { animation-delay: 0.16s; }
+        .spinner-dot:nth-child(3) { animation-delay: 0.32s; }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        .spinner h3 { color: var(--gray-800); font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+        .spinner p { color: var(--gray-400); font-size: 13px; }
 
         /* ─── Review Table ─── */
         .review-section { display: none; }
-        .review-section.active { display: block; }
+        .review-section.active { display: block; animation: fadeIn 0.3s ease; }
         .raw-text-box {
-            background: var(--gray-100);
-            border-radius: 8px;
-            padding: 12px;
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            padding: 14px;
             font-size: 13px;
             color: var(--gray-600);
             margin-bottom: 16px;
             white-space: pre-wrap;
             max-height: 120px;
             overflow-y: auto;
+            font-family: 'SF Mono', Monaco, monospace;
+            line-height: 1.5;
         }
         .entry-row {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px 0;
+            gap: 12px;
+            padding: 14px 0;
             border-bottom: 1px solid var(--gray-100);
+            transition: background 0.15s;
         }
+        .entry-row:hover { background: var(--gray-50); margin: 0 -20px; padding: 14px 20px; }
         .entry-row:last-child { border-bottom: none; }
+        .entry-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
         .entry-info { flex: 1; min-width: 0; }
         .entry-note {
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--gray-800);
+            text-transform: capitalize;
         }
         .entry-meta {
             font-size: 12px;
-            color: var(--gray-500);
+            color: var(--gray-400);
             margin-top: 2px;
+            font-weight: 500;
         }
         .entry-amount {
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--gray-900);
             white-space: nowrap;
         }
         .entry-delete {
             background: none;
             border: none;
-            color: var(--gray-400);
+            color: var(--gray-300);
             cursor: pointer;
-            padding: 4px;
+            padding: 6px;
+            border-radius: 6px;
+            transition: all 0.15s;
         }
-        .entry-delete:hover { color: var(--red); }
+        .entry-delete:hover { color: var(--red); background: var(--red-light); }
 
-        /* ─── Dashboard Entry List ─── */
+        /* ─── Dashboard ─── */
         .month-selector {
             display: flex;
             align-items: center;
@@ -314,46 +469,61 @@
         }
         .month-selector select {
             flex: 1;
-            padding: 10px 12px;
+            padding: 12px 14px;
             border: 1px solid var(--gray-200);
-            border-radius: 8px;
+            border-radius: var(--radius-sm);
             font-size: 14px;
+            font-weight: 600;
             background: white;
             color: var(--gray-800);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 5.646a.5.5 0 0 1 .708 0L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 36px;
         }
 
         /* ─── Chart Container ─── */
         .chart-container {
             position: relative;
-            height: 250px;
-            margin-bottom: 16px;
+            height: 260px;
+            margin-bottom: 8px;
         }
 
         /* ─── Manual Add Form ─── */
         .add-form { display: none; }
-        .add-form.active { display: block; }
-        .form-group { margin-bottom: 12px; }
+        .add-form.active { display: block; animation: slideUp 0.3s ease; }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .form-group { margin-bottom: 14px; }
         .form-group label {
             display: block;
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 12px;
+            font-weight: 700;
             color: var(--gray-600);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--gray-200);
-            border-radius: 8px;
+            padding: 12px 14px;
+            border: 1.5px solid var(--gray-200);
+            border-radius: var(--radius-sm);
             font-size: 14px;
+            font-weight: 500;
             color: var(--gray-800);
+            background: white;
+            transition: all 0.2s;
         }
         .form-group input:focus,
         .form-group select:focus {
             outline: none;
-            border-color: var(--blue);
-            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(79,70,229,0.1);
         }
         .form-row {
             display: grid;
@@ -366,99 +536,210 @@
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            padding: 16px;
+            padding: 18px;
             margin-bottom: 12px;
+            border: 1px solid var(--gray-100);
+            transition: all 0.2s;
         }
+        .history-month:hover { box-shadow: var(--shadow-md); }
         .history-month-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
         .history-month-name {
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--gray-800);
         }
         .history-month-total {
-            font-size: 18px;
-            font-weight: 700;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
         }
         .history-bar-container {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
         .history-bar-bg {
-            height: 6px;
-            background: var(--gray-200);
-            border-radius: 3px;
+            height: 8px;
+            background: var(--gray-100);
+            border-radius: 4px;
             overflow: hidden;
         }
         .history-bar-fill {
             height: 100%;
-            border-radius: 3px;
+            border-radius: 4px;
+            transition: width 0.6s ease;
         }
         .history-categories {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
-            margin-top: 10px;
+            margin-top: 12px;
         }
         .history-cat-tag {
             font-size: 11px;
-            padding: 3px 8px;
-            border-radius: 4px;
-            background: var(--gray-100);
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
             color: var(--gray-600);
         }
 
         /* ─── Toast ─── */
         .toast {
             position: fixed;
-            bottom: 90px;
+            bottom: 100px;
             left: 50%;
             transform: translateX(-50%) translateY(20px);
-            background: var(--gray-800);
+            background: var(--gray-900);
             color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 14px 28px;
+            border-radius: 12px;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             opacity: 0;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 200;
             pointer-events: none;
+            box-shadow: var(--shadow-lg);
         }
         .toast.show {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
 
+        /* ─── FAB (Floating Action Button) ─── */
+        .fab {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(79,70,229,0.4);
+            z-index: 90;
+            transition: all 0.2s;
+        }
+        .fab:active { transform: scale(0.92); }
+        .fab:hover { box-shadow: 0 6px 20px rgba(79,70,229,0.5); transform: translateY(-2px); }
+        .fab svg { width: 24px; height: 24px; }
+        .fab.visible { display: flex; }
+
+        /* ─── Upload Modal ─── */
+        .upload-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15,23,42,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 150;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+        }
+        .upload-modal-overlay.active { display: flex; }
+        .upload-modal {
+            background: white;
+            border-radius: 20px 20px 0 0;
+            width: 100%;
+            max-width: 600px;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 24px 20px 40px;
+            animation: slideUpModal 0.3s ease;
+        }
+        @keyframes slideUpModal {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .upload-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .upload-modal-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+        .upload-modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: var(--gray-100);
+            color: var(--gray-500);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .upload-modal-close:hover { background: var(--gray-200); }
+
         /* ─── Empty State ─── */
         .empty-state {
             text-align: center;
-            padding: 40px 20px;
+            padding: 48px 20px;
             color: var(--gray-400);
         }
-        .empty-state svg { width: 48px; height: 48px; margin-bottom: 12px; }
-        .empty-state p { font-size: 14px; }
+        .empty-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--gray-100);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            font-size: 24px;
+        }
+        .empty-state h3 { font-size: 15px; font-weight: 700; color: var(--gray-600); margin-bottom: 4px; }
+        .empty-state p { font-size: 13px; }
+
+        /* ─── Section Title ─── */
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 12px;
+            padding-left: 4px;
+        }
     </style>
 </head>
 <body>
 
 <!-- ─── Header ─── -->
 <div class="header">
-    <h1>🏠 Home Expenses</h1>
-    <p>Monthly budget: ₹18,000</p>
+    <div class="header-top">
+        <h1>Home Expenses</h1>
+        <span class="header-badge">₹18,000/mo</span>
+    </div>
+    <p>Track household spending effortlessly</p>
 </div>
 
 <!-- ═══ TAB 1: UPLOAD ═══ -->
 <div id="tab-upload" class="tab-content active">
     <div class="upload-area" id="upload-area">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
-        </svg>
-        <p>Tap to upload notebook photo</p>
-        <p class="hint">JPEG, PNG, or WEBP — max 10MB</p>
+        <div class="upload-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+        </div>
+        <h3>Upload notebook photo</h3>
+        <p>Take a photo or choose from gallery</p>
+        <span class="hint">JPEG, PNG, WEBP — max 10MB</span>
     </div>
     <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/heic">
 
@@ -466,7 +747,7 @@
         <img id="preview-img" src="" alt="Preview">
         <div class="actions">
             <button class="btn btn-primary btn-full" id="parse-btn" onclick="parseImage()">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
                     <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>
                 </svg>
                 Parse with AI
@@ -476,9 +757,13 @@
     </div>
 
     <div class="spinner" id="parse-spinner">
-        <div class="spinner-circle"></div>
-        <p>Reading notebook...</p>
-        <p style="font-size:12px; color:var(--gray-400); margin-top:4px;">This takes 5–10 seconds</p>
+        <div class="spinner-dots">
+            <div class="spinner-dot"></div>
+            <div class="spinner-dot"></div>
+            <div class="spinner-dot"></div>
+        </div>
+        <h3>Reading your notebook...</h3>
+        <p>AI is extracting expenses — takes 5–10 seconds</p>
     </div>
 
     <div class="review-section" id="review-section">
@@ -487,12 +772,12 @@
             <div class="raw-text-box" id="raw-text"></div>
         </div>
         <div class="card">
-            <div class="card-title">Parsed entries (<span id="entry-count">0</span>)</div>
+            <div class="card-title">Parsed entries · <span id="entry-count" style="color:var(--primary);">0</span></div>
             <div id="entry-list"></div>
         </div>
-        <div style="display:flex; gap:8px; margin-top:16px;">
+        <div style="display:flex; gap:10px; margin-top:16px;">
             <button class="btn btn-success btn-full" onclick="confirmEntries()">
-                ✓ Confirm & Save
+                Confirm & Save
             </button>
             <button class="btn btn-danger" onclick="clearUpload()">Discard</button>
         </div>
@@ -507,30 +792,34 @@
 
     <div class="metrics-grid">
         <div class="metric-card">
+            <div class="metric-icon">💰</div>
             <div class="metric-label">Budget</div>
             <div class="metric-value">₹18,000</div>
         </div>
         <div class="metric-card">
+            <div class="metric-icon">🛒</div>
             <div class="metric-label">Spent</div>
             <div class="metric-value" id="metric-spent">₹0</div>
         </div>
         <div class="metric-card">
+            <div class="metric-icon">✅</div>
             <div class="metric-label">Remaining</div>
             <div class="metric-value green" id="metric-remaining">₹18,000</div>
         </div>
         <div class="metric-card">
+            <div class="metric-icon">📝</div>
             <div class="metric-label">Entries</div>
             <div class="metric-value" id="metric-entries">0</div>
         </div>
     </div>
 
-    <div class="progress-container">
+    <div class="progress-card">
         <div class="progress-bar-bg">
-            <div class="progress-bar-fill" id="progress-fill" style="width:0%; background:var(--blue);"></div>
+            <div class="progress-bar-fill" id="progress-fill" style="width:0%;"></div>
         </div>
         <div class="progress-label">
-            <span id="progress-pct">0%</span>
-            <span>of ₹18,000</span>
+            <span class="progress-pct" id="progress-pct">0%</span>
+            <span>of ₹18,000 budget</span>
         </div>
     </div>
 
@@ -545,10 +834,9 @@
         <div class="card-title">All entries</div>
         <div id="dashboard-entries"></div>
         <div class="empty-state" id="no-entries-msg">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
-            </svg>
-            <p>No entries this month</p>
+            <div class="empty-icon">📋</div>
+            <h3>No entries yet</h3>
+            <p>Upload a notebook photo or add entries manually</p>
         </div>
     </div>
 
@@ -557,7 +845,7 @@
         + Add entry manually
     </button>
     <div class="add-form card" id="add-form">
-        <div class="card-title">Add entry</div>
+        <div class="card-title">New entry</div>
         <div class="form-row">
             <div class="form-group">
                 <label>Date</label>
@@ -574,24 +862,89 @@
         </div>
         <div class="form-group">
             <label>Note</label>
-            <input type="text" id="add-note" placeholder="e.g. milk, rice">
+            <input type="text" id="add-note" placeholder="e.g. milk, rice, vegetables">
         </div>
-        <button class="btn btn-primary btn-full" onclick="addManualEntry()">Add</button>
+        <button class="btn btn-primary btn-full" onclick="addManualEntry()">Add entry</button>
     </div>
 </div>
 
 <!-- ═══ TAB 3: HISTORY ═══ -->
 <div id="tab-history" class="tab-content">
-    <div class="card">
-        <div class="card-title">Monthly history</div>
-        <div id="history-list"></div>
-        <div class="empty-state" id="no-history-msg">
-            <p>No history yet — upload your first notebook photo!</p>
+    <div class="section-title">Monthly overview</div>
+    <div id="history-list"></div>
+    <div class="empty-state" id="no-history-msg">
+        <div class="empty-icon">📊</div>
+        <h3>No history yet</h3>
+        <p>Upload your first notebook photo to get started!</p>
+    </div>
+    <button class="btn btn-secondary btn-full" onclick="printSummary()" style="margin-top:12px;">
+        Print summary
+    </button>
+</div>
+
+<!-- ─── FAB (scan from dashboard) ─── -->
+<button class="fab" id="scan-fab" onclick="openScanModal()" title="Scan notebook">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+    </svg>
+</button>
+
+<!-- ─── Upload Modal (triggered from FAB) ─── -->
+<div class="upload-modal-overlay" id="upload-modal" onclick="closeScanModal(event)">
+    <div class="upload-modal" onclick="event.stopPropagation()">
+        <div class="upload-modal-header">
+            <h2>Scan notebook</h2>
+            <button class="upload-modal-close" onclick="closeScanModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>
+        <div class="upload-area" id="modal-upload-area">
+            <div class="upload-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+            </div>
+            <h3>Upload notebook photo</h3>
+            <p>Take a photo or choose from gallery</p>
+            <span class="hint">JPEG, PNG, WEBP — max 10MB</span>
+        </div>
+        <input type="file" id="modal-file-input" accept="image/jpeg,image/png,image/webp,image/heic" style="display:none">
+        <div class="image-preview" id="modal-image-preview">
+            <img id="modal-preview-img" src="" alt="Preview">
+            <div class="actions">
+                <button class="btn btn-primary btn-full" onclick="modalParseImage()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                        <path d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z"/>
+                    </svg>
+                    Parse with AI
+                </button>
+                <button class="btn btn-secondary" onclick="clearModal()">Clear</button>
+            </div>
+        </div>
+        <div class="spinner" id="modal-spinner">
+            <div class="spinner-dots">
+                <div class="spinner-dot"></div>
+                <div class="spinner-dot"></div>
+                <div class="spinner-dot"></div>
+            </div>
+            <h3>Reading your notebook...</h3>
+            <p>AI is extracting expenses — takes 5–10 seconds</p>
+        </div>
+        <div class="review-section" id="modal-review">
+            <div class="card" style="box-shadow:none; border:1px solid var(--gray-200);">
+                <div class="card-title">Raw text from image</div>
+                <div class="raw-text-box" id="modal-raw-text"></div>
+            </div>
+            <div class="card" style="box-shadow:none; border:1px solid var(--gray-200);">
+                <div class="card-title">Parsed entries · <span id="modal-entry-count" style="color:var(--primary);">0</span></div>
+                <div id="modal-entry-list"></div>
+            </div>
+            <div style="display:flex; gap:10px; margin-top:16px;">
+                <button class="btn btn-success btn-full" onclick="modalConfirmEntries()">Confirm & Save</button>
+                <button class="btn btn-danger" onclick="clearModal()">Discard</button>
+            </div>
         </div>
     </div>
-    <button class="btn btn-secondary btn-full" onclick="printSummary()" style="margin-top:8px;">
-        🖨 Print summary
-    </button>
 </div>
 
 <!-- ─── Bottom Tab Bar ─── -->
@@ -631,14 +984,30 @@ const CATEGORIES = [
     "Electricity bill", "Water & maintenance", "Medical", "Transport",
     "Temple & festivals", "Miscellaneous"
 ];
+const CATEGORY_EMOJIS = {
+    "Groceries": "🛒",
+    "Vegetables & fruits": "🥬",
+    "Milk & dairy": "🥛",
+    "Cooking gas": "🔥",
+    "Electricity bill": "⚡",
+    "Water & maintenance": "🚰",
+    "Medical": "💊",
+    "Transport": "🚌",
+    "Temple & festivals": "🛕",
+    "Miscellaneous": "📦"
+};
 const CATEGORY_COLORS = [
-    "#2563eb", "#16a34a", "#0891b2", "#d97706",
+    "#4f46e5", "#059669", "#0891b2", "#d97706",
     "#7c3aed", "#0d9488", "#dc2626", "#ea580c",
-    "#db2777", "#6b7280"
+    "#db2777", "#64748b"
+];
+const CATEGORY_BG_COLORS = [
+    "#eef2ff", "#ecfdf5", "#ecfeff", "#fffbeb",
+    "#f5f3ff", "#f0fdfa", "#fef2f2", "#fff7ed",
+    "#fdf2f8", "#f8fafc"
 ];
 
 // ─── Firebase Config ───
-// TODO: Replace with your Firebase config from console.firebase.google.com
 const firebaseConfig = {
     apiKey: "AIzaSyCUWFkzMEW5A8P5MTmwH_W8OCo4q5-svh0",
     authDomain: "home-expense-tracker-8a5c9.firebaseapp.com",
@@ -652,13 +1021,11 @@ const firebaseConfig = {
 // FIREBASE INIT
 // ═══════════════════════════════════════════════
 
-// Firebase SDKs loaded from CDN
 let db = null;
 let firebaseReady = false;
 
 async function initFirebase() {
     try {
-        // Dynamic import of Firebase modules
         const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
         const { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, where, Timestamp }
             = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
@@ -666,7 +1033,6 @@ async function initFirebase() {
         const app = initializeApp(firebaseConfig);
         db = getFirestore(app);
 
-        // Store Firestore functions globally
         window.fb = { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, where, Timestamp };
         firebaseReady = true;
 
@@ -689,11 +1055,12 @@ function switchTab(tab) {
     document.getElementById(`tab-${tab}`).classList.add('active');
     document.getElementById(`btn-${tab}`).classList.add('active');
 
-    if (tab === 'dashboard') {
-        loadMonth();
-    } else if (tab === 'history') {
-        loadHistory();
-    }
+    // Show FAB on dashboard and history
+    const fab = document.getElementById('scan-fab');
+    fab.classList.toggle('visible', tab === 'dashboard' || tab === 'history');
+
+    if (tab === 'dashboard') loadMonth();
+    else if (tab === 'history') loadHistory();
 }
 
 // ═══════════════════════════════════════════════
@@ -774,22 +1141,30 @@ async function parseImage() {
     }
 }
 
+function getCategoryIndex(cat) {
+    const idx = CATEGORIES.indexOf(cat);
+    return idx >= 0 ? idx : CATEGORIES.length - 1;
+}
+
 function renderReviewEntries() {
     const container = document.getElementById('entry-list');
-    container.innerHTML = parsedEntries.map((e, i) => `
+    container.innerHTML = parsedEntries.map((e, i) => {
+        const idx = getCategoryIndex(e.category);
+        return `
         <div class="entry-row">
+            <div class="entry-icon" style="background:${CATEGORY_BG_COLORS[idx]}">${CATEGORY_EMOJIS[e.category] || '📦'}</div>
             <div class="entry-info">
                 <div class="entry-note">${escHtml(e.note)}</div>
-                <div class="entry-meta">${e.date} · ${escHtml(e.category)}</div>
+                <div class="entry-meta">${formatDate(e.date)} · ${escHtml(e.category)}</div>
             </div>
             <div class="entry-amount">₹${e.amount.toLocaleString('en-IN')}</div>
             <button class="entry-delete" onclick="removeReviewEntry(${i})" title="Remove">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
                     <path d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
         </div>
-    `).join('');
+    `}).join('');
 }
 
 function removeReviewEntry(index) {
@@ -799,14 +1174,8 @@ function removeReviewEntry(index) {
 }
 
 async function confirmEntries() {
-    if (!firebaseReady) {
-        showToast("Firebase not connected — check config");
-        return;
-    }
-    if (parsedEntries.length === 0) {
-        showToast("No entries to save");
-        return;
-    }
+    if (!firebaseReady) { showToast("Firebase not connected — check config"); return; }
+    if (parsedEntries.length === 0) { showToast("No entries to save"); return; }
 
     try {
         const { collection, addDoc } = window.fb;
@@ -824,7 +1193,6 @@ async function confirmEntries() {
 
         showToast(`${parsedEntries.length} entries saved!`);
         clearUpload();
-        // Refresh dashboard data
         loadMonth();
         loadHistory();
     } catch (err) {
@@ -850,11 +1218,9 @@ function populateMonthSelector() {
         select.innerHTML += `<option value="${val}">${label}</option>`;
     }
 
-    // Populate category dropdown for add form
     const catSelect = document.getElementById('add-category');
-    catSelect.innerHTML = CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join('');
+    catSelect.innerHTML = CATEGORIES.map(c => `<option value="${c}">${CATEGORY_EMOJIS[c]} ${c}</option>`).join('');
 
-    // Default date for manual add
     document.getElementById('add-date').value = new Date().toISOString().split('T')[0];
 }
 
@@ -866,8 +1232,6 @@ async function loadMonth() {
 
     const [year, month] = monthVal.split('-').map(Number);
     const startDate = `${year}-${String(month).padStart(2, '0')}-01`;
-    const endDate = `${year}-${String(month + 1).padStart(2, '0')}-01`;
-    // Handle December → January rollover
     const endYear = month === 12 ? year + 1 : year;
     const endMonth = month === 12 ? 1 : month + 1;
     const endDateFixed = `${endYear}-${String(endMonth).padStart(2, '0')}-01`;
@@ -883,14 +1247,10 @@ async function loadMonth() {
 
         const snapshot = await getDocs(q);
         const entries = [];
-        snapshot.forEach(docSnap => {
-            entries.push({ id: docSnap.id, ...docSnap.data() });
-        });
-
+        snapshot.forEach(docSnap => entries.push({ id: docSnap.id, ...docSnap.data() }));
         updateDashboard(entries);
     } catch (err) {
         console.error("Load failed:", err);
-        // If index not built, try without orderBy
         try {
             const { collection, getDocs, query, where } = window.fb;
             const q = query(
@@ -900,9 +1260,7 @@ async function loadMonth() {
             );
             const snapshot = await getDocs(q);
             const entries = [];
-            snapshot.forEach(docSnap => {
-                entries.push({ id: docSnap.id, ...docSnap.data() });
-            });
+            snapshot.forEach(docSnap => entries.push({ id: docSnap.id, ...docSnap.data() }));
             entries.sort((a, b) => b.date.localeCompare(a.date));
             updateDashboard(entries);
         } catch (err2) {
@@ -916,7 +1274,6 @@ function updateDashboard(entries) {
     const remaining = BUDGET - total;
     const pct = Math.min(100, (total / BUDGET) * 100);
 
-    // Metrics
     document.getElementById('metric-spent').textContent = `₹${total.toLocaleString('en-IN')}`;
     const remEl = document.getElementById('metric-remaining');
     remEl.textContent = `₹${Math.abs(remaining).toLocaleString('en-IN')}`;
@@ -935,7 +1292,7 @@ function updateDashboard(entries) {
     // Progress bar
     const fill = document.getElementById('progress-fill');
     fill.style.width = `${pct}%`;
-    fill.style.background = pct >= 90 ? 'var(--red)' : pct >= 70 ? 'var(--amber)' : 'var(--blue)';
+    fill.className = 'progress-bar-fill' + (pct >= 90 ? ' danger' : pct >= 70 ? ' warning' : '');
     document.getElementById('progress-pct').textContent = `${Math.round(pct)}%`;
 
     // Category chart
@@ -955,29 +1312,36 @@ function updateDashboard(entries) {
     categoryChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: activeCats,
+            labels: activeCats.map(c => `${CATEGORY_EMOJIS[c]} ${c}`),
             datasets: [{
                 data: chartData,
                 backgroundColor: chartColors,
-                borderWidth: 0,
-                hoverOffset: 4
+                borderWidth: 3,
+                borderColor: '#ffffff',
+                hoverOffset: 6,
+                borderRadius: 4
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            cutout: '65%',
+            cutout: '68%',
             plugins: {
                 legend: {
                     position: 'bottom',
                     labels: {
-                        padding: 12,
+                        padding: 14,
                         usePointStyle: true,
                         pointStyleWidth: 8,
-                        font: { size: 12 }
+                        font: { size: 12, weight: '500', family: 'Inter' }
                     }
                 },
                 tooltip: {
+                    backgroundColor: '#1e293b',
+                    titleFont: { family: 'Inter', weight: '600' },
+                    bodyFont: { family: 'Inter' },
+                    padding: 12,
+                    cornerRadius: 8,
                     callbacks: {
                         label: (ctx) => ` ₹${ctx.parsed.toLocaleString('en-IN')} (${Math.round(ctx.parsed / total * 100)}%)`
                     }
@@ -994,20 +1358,23 @@ function updateDashboard(entries) {
         noMsg.style.display = 'block';
     } else {
         noMsg.style.display = 'none';
-        container.innerHTML = entries.map(e => `
+        container.innerHTML = entries.map(e => {
+            const idx = getCategoryIndex(e.category);
+            return `
             <div class="entry-row">
+                <div class="entry-icon" style="background:${CATEGORY_BG_COLORS[idx]}">${CATEGORY_EMOJIS[e.category] || '📦'}</div>
                 <div class="entry-info">
                     <div class="entry-note">${escHtml(e.note || '')}</div>
                     <div class="entry-meta">${formatDate(e.date)} · ${escHtml(e.category)}</div>
                 </div>
                 <div class="entry-amount">₹${(e.amount || 0).toLocaleString('en-IN')}</div>
                 <button class="entry-delete" onclick="deleteEntry('${e.id}')" title="Delete">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
                         <path d="M6 18L18 6M6 6l12 12"/>
                     </svg>
                 </button>
             </div>
-        `).join('');
+        `}).join('');
     }
 }
 
@@ -1023,8 +1390,6 @@ async function deleteEntry(id) {
         showToast("Delete failed");
     }
 }
-
-// ─── Manual Add ───
 
 function toggleAddForm() {
     const form = document.getElementById('add-form');
@@ -1074,7 +1439,6 @@ async function loadHistory() {
         const all = [];
         snapshot.forEach(docSnap => all.push(docSnap.data()));
 
-        // Group by month
         const months = {};
         all.forEach(e => {
             const key = e.date ? e.date.substring(0, 7) : 'unknown';
@@ -1097,9 +1461,11 @@ async function loadHistory() {
             const entries = months[key];
             const total = entries.reduce((s, e) => s + (e.amount || 0), 0);
             const pct = Math.min(100, (total / BUDGET) * 100);
-            const color = pct >= 90 ? 'var(--red)' : pct >= 70 ? 'var(--amber)' : 'var(--blue)';
+            const barGradient = pct >= 90 ? 'linear-gradient(90deg, #dc2626, #ef4444)' :
+                                pct >= 70 ? 'linear-gradient(90deg, #d97706, #f59e0b)' :
+                                'linear-gradient(90deg, #4f46e5, #7c3aed)';
+            const color = pct >= 90 ? 'var(--red)' : pct >= 70 ? 'var(--amber)' : 'var(--primary)';
 
-            // Category breakdown
             const cats = {};
             entries.forEach(e => {
                 const c = e.category || 'Miscellaneous';
@@ -1118,14 +1484,14 @@ async function loadHistory() {
                     </div>
                     <div class="history-bar-container">
                         <div class="history-bar-bg">
-                            <div class="history-bar-fill" style="width:${pct}%; background:${color};"></div>
+                            <div class="history-bar-fill" style="width:${pct}%; background:${barGradient};"></div>
                         </div>
                     </div>
                     <div class="history-categories">
                         ${topCats.map(([c, amt]) =>
-                            `<span class="history-cat-tag">${c}: ₹${amt.toLocaleString('en-IN')}</span>`
+                            `<span class="history-cat-tag">${CATEGORY_EMOJIS[c] || '📦'} ${c}: ₹${amt.toLocaleString('en-IN')}</span>`
                         ).join('')}
-                        <span class="history-cat-tag">${entries.length} entries</span>
+                        <span class="history-cat-tag">📝 ${entries.length} entries</span>
                     </div>
                 </div>
             `;
@@ -1138,6 +1504,141 @@ async function loadHistory() {
 
 function printSummary() {
     window.print();
+}
+
+// ═══════════════════════════════════════════════
+// SCAN MODAL (FAB)
+// ═══════════════════════════════════════════════
+
+let modalFile = null;
+let modalParsedEntries = [];
+
+const modalUploadArea = document.getElementById('modal-upload-area');
+const modalFileInput = document.getElementById('modal-file-input');
+
+modalUploadArea.addEventListener('click', () => modalFileInput.click());
+modalFileInput.addEventListener('change', (e) => { if (e.target.files.length) handleModalFile(e.target.files[0]); });
+
+function openScanModal() {
+    document.getElementById('upload-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeScanModal(e) {
+    if (e && e.target !== document.getElementById('upload-modal')) return;
+    document.getElementById('upload-modal').classList.remove('active');
+    document.body.style.overflow = '';
+    clearModal();
+}
+
+function handleModalFile(file) {
+    if (file.size > 10 * 1024 * 1024) { showToast("File too large — keep under 10MB"); return; }
+    modalFile = file;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        document.getElementById('modal-preview-img').src = e.target.result;
+        document.getElementById('modal-image-preview').style.display = 'block';
+        modalUploadArea.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+}
+
+function clearModal() {
+    modalFile = null;
+    modalParsedEntries = [];
+    modalFileInput.value = '';
+    document.getElementById('modal-image-preview').style.display = 'none';
+    document.getElementById('modal-review').classList.remove('active');
+    document.getElementById('modal-spinner').classList.remove('active');
+    modalUploadArea.style.display = 'block';
+}
+
+async function modalParseImage() {
+    if (!modalFile) return;
+
+    document.getElementById('modal-image-preview').style.display = 'none';
+    document.getElementById('modal-spinner').classList.add('active');
+
+    const formData = new FormData();
+    formData.append('file', modalFile);
+
+    try {
+        const res = await fetch(`${API_URL}/parse`, { method: 'POST', body: formData });
+        if (!res.ok) { const err = await res.json(); throw new Error(err.detail || 'Parse failed'); }
+
+        const data = await res.json();
+        modalParsedEntries = data.entries || [];
+
+        document.getElementById('modal-raw-text').textContent = data.raw_text || '(no text extracted)';
+        document.getElementById('modal-entry-count').textContent = modalParsedEntries.length;
+
+        document.getElementById('modal-entry-list').innerHTML = modalParsedEntries.map((e, i) => {
+            const idx = getCategoryIndex(e.category);
+            return `
+            <div class="entry-row">
+                <div class="entry-icon" style="background:${CATEGORY_BG_COLORS[idx]}">${CATEGORY_EMOJIS[e.category] || '📦'}</div>
+                <div class="entry-info">
+                    <div class="entry-note">${escHtml(e.note)}</div>
+                    <div class="entry-meta">${formatDate(e.date)} · ${escHtml(e.category)}</div>
+                </div>
+                <div class="entry-amount">₹${e.amount.toLocaleString('en-IN')}</div>
+                <button class="entry-delete" onclick="modalRemoveEntry(${i})" title="Remove">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>`;
+        }).join('');
+
+        document.getElementById('modal-spinner').classList.remove('active');
+        document.getElementById('modal-review').classList.add('active');
+    } catch (err) {
+        document.getElementById('modal-spinner').classList.remove('active');
+        document.getElementById('modal-image-preview').style.display = 'block';
+        showToast(err.message || "Parsing failed — try again");
+    }
+}
+
+function modalRemoveEntry(index) {
+    modalParsedEntries.splice(index, 1);
+    document.getElementById('modal-entry-count').textContent = modalParsedEntries.length;
+    // Re-render
+    document.getElementById('modal-entry-list').innerHTML = modalParsedEntries.map((e, i) => {
+        const idx = getCategoryIndex(e.category);
+        return `
+        <div class="entry-row">
+            <div class="entry-icon" style="background:${CATEGORY_BG_COLORS[idx]}">${CATEGORY_EMOJIS[e.category] || '📦'}</div>
+            <div class="entry-info">
+                <div class="entry-note">${escHtml(e.note)}</div>
+                <div class="entry-meta">${formatDate(e.date)} · ${escHtml(e.category)}</div>
+            </div>
+            <div class="entry-amount">₹${e.amount.toLocaleString('en-IN')}</div>
+            <button class="entry-delete" onclick="modalRemoveEntry(${i})" title="Remove">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+        </div>`;
+    }).join('');
+}
+
+async function modalConfirmEntries() {
+    if (!firebaseReady) { showToast("Firebase not connected"); return; }
+    if (modalParsedEntries.length === 0) { showToast("No entries to save"); return; }
+
+    try {
+        const { collection, addDoc } = window.fb;
+        const colRef = collection(db, "expenses");
+        for (const entry of modalParsedEntries) {
+            await addDoc(colRef, {
+                date: entry.date, category: entry.category,
+                note: entry.note, amount: entry.amount,
+                createdAt: new Date().toISOString()
+            });
+        }
+        showToast(`${modalParsedEntries.length} entries saved!`);
+        closeScanModal();
+        loadMonth();
+        loadHistory();
+    } catch (err) {
+        showToast("Save failed — check Firebase config");
+    }
 }
 
 // ═══════════════════════════════════════════════
