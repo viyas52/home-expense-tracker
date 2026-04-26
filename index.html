@@ -787,8 +787,8 @@
 <div class="toast" id="toast"></div>
 
 <script>
-let API_URL = "http://localhost:8000";
-let BUDGET = 18000;
+let API_URL = localStorage.getItem('het_api_url') || "http://localhost:8000";
+let BUDGET = parseInt(localStorage.getItem('het_budget')) || 18000;
 const CATEGORIES = [
     "Groceries", "Vegetables & fruits", "Milk & dairy", "Cooking gas",
     "Electricity bill", "Water & maintenance", "Medical", "Transport",
@@ -1152,6 +1152,7 @@ function updateBudget() {
     const val = parseInt(document.getElementById('settings-budget').value);
     if (val > 0) {
         BUDGET = val;
+        localStorage.setItem('het_budget', val);
         document.getElementById('header-budget').textContent = `₹${val.toLocaleString('en-IN')}/mo`;
         document.getElementById('metric-budget').textContent = `₹${val.toLocaleString('en-IN')}`;
         document.getElementById('progress-budget-label').textContent = `of ₹${val.toLocaleString('en-IN')} budget`;
@@ -1162,7 +1163,7 @@ function updateBudget() {
 
 function updateApiUrl() {
     const val = document.getElementById('settings-api').value.trim();
-    if (val) { API_URL = val; showToast("API URL updated"); }
+    if (val) { API_URL = val; localStorage.setItem('het_api_url', val); showToast("API URL updated"); }
 }
 
 function escHtml(str) { const d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
@@ -1176,6 +1177,13 @@ function showToast(msg) {
     toast.textContent = msg; toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 3000);
 }
+
+// Hydrate settings UI from persisted values
+document.getElementById('settings-budget').value = BUDGET;
+document.getElementById('settings-api').value = API_URL;
+document.getElementById('header-budget').textContent = `₹${BUDGET.toLocaleString('en-IN')}/mo`;
+document.getElementById('metric-budget').textContent = `₹${BUDGET.toLocaleString('en-IN')}`;
+document.getElementById('progress-budget-label').textContent = `of ₹${BUDGET.toLocaleString('en-IN')} budget`;
 
 if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(() => {}); }
 initFirebase();
