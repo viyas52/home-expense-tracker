@@ -38,22 +38,24 @@ Entries follow a date-wise format, for example:
 
 Your job is to extract every expense entry and return structured JSON.
 
-Category mapping guide:
-- Provision = rice, dal, spices, bread, oil, sugar, atta, staples
-- Vegetables = all vegetables and fruits
-- Milk & cream = milk, curd, cream, paneer, butter
-- Non-veg = chicken, mutton, fish, eggs, prawns
-- Snacks = chips, biscuits, bakery items, tea snacks, sweets
-- Flower = pooja flowers, garlands, malligai
-- Toiletries = harpic, brush, soap, shampoo, toothpaste
-- Detergents = dish wash, washing machine liquid, vim, surf
-- Iron = clothes ironing, pressing, laundry
-- Servant salary = maid, house cleaner, toilet cleaner, cook salary
-- Miscellaneous = anything that doesn't fit above
+CRITICAL CATEGORY MAPPING — you MUST match every item to the correct category using these keywords.
+Pay very close attention to Tamil words. Do NOT guess — use the mappings below strictly.
+
+1. Provision = rice (அரிசி, arisi), dal (பருப்பு, paruppu), spices (மசாலா, masala), bread, oil (எண்ணெய், ennai, nallennai), sugar (சர்க்கரை, sakkarai), atta, wheat flour, salt (உப்பு, uppu), tamarind (புளி, puli), turmeric (மஞ்சள், manjal), chilli powder (மிளகாய், milagai), mustard (கடுகு, kadugu), cumin (சீரகம், jeeragam), rava (ரவை), maida, jaggery (வெல்லம், vellam), idli rice, urad dal, toor dal, sambar powder, rasam powder, coconut (தேங்காய், thengai), any grocery staple
+2. Vegetables = vegetables (காய்கறி, kaikari), tomato (தக்காளி, thakkali), onion (வெங்காயம், vengayam), potato (உருளைக்கிழங்கு), brinjal (கத்தரிக்காய்), ladies finger (வெண்டைக்காய்), beans, carrot, drumstick (முருங்கைக்காய்), greens (கீரை, keerai), fruits (பழம், pazham), banana (வாழைப்பழம்), apple, grapes — NEVER put meat/chicken/fish here
+3. Milk & cream = milk (பால், paal), curd (தயிர், thayir), cream, paneer, butter (வெண்ணெய், vennai), ghee (நெய், nei), buttermilk (மோர், mor), cheese
+4. Non-veg = chicken (கோழி, kozhi, சிக்கன், chicken), mutton (ஆட்டிறைச்சி, aattu kari, மட்டன்), fish (மீன், meen), eggs (முட்டை, muttai), prawns (இறால், iraal), meat (இறைச்சி, iraichi), crab (நண்டு, nandu), biryani meat — ANY animal protein goes here, NEVER in Vegetables
+5. Snacks = chips, biscuits (பிஸ்கட்), bakery, tea snacks, sweets (இனிப்பு, inippu), murukku, mixture, cake, halwa, laddu, cool drinks, juice
+6. Flower = flowers (பூ, poo, புஷ்பம், pushpam), garlands (மாலை, maalai), jasmine (மல்லிகை, mallikai, malligai, மல்லிப்பூ, mullai), rose (ரோஜா, roja), marigold, sambhangi, temple flowers, pooja flowers, flower for prayer, puja items — ANY mention of பூ or flower or maalai or mallikai goes here, NOT Miscellaneous
+7. Toiletries = harpic, toilet cleaner liquid, brush, soap (சோப்பு, soap), shampoo, toothpaste (பற்பசை), toothbrush, razor, sanitary items, hand wash, face wash, hair oil
+8. Detergents = dish wash (பாத்திரம் கழுவி, vim), washing powder, washing machine liquid, surf, bleach, phenol (பினாயில்), colin, cleaning liquid
+9. Iron = clothes ironing (இஸ்திரி, istri, press), pressing, laundry, drycleaning, ironing man
+10. Servant salary = maid (வேலைக்காரி, velaikkaari), house cleaner, toilet cleaner salary, cook salary (சமையல்காரி), watchman (காவலாளி), driver, ayah, servant pay
+11. Miscellaneous = ONLY use this if the item truly does not fit any of the 10 categories above
 
 Rules:
-- Map each item to the closest category from this list: """ + ", ".join(CATEGORIES) + """
-- If an item does not fit any category clearly, use "Miscellaneous"
+- You MUST use EXACTLY one of these category names: """ + ", ".join(CATEGORIES) + """
+- Think carefully about each Tamil word before assigning a category. Do NOT default to Miscellaneous or Vegetables when unsure — re-read the mappings above
 - Amount is always a number in Indian Rupees
 - Date format in output: YYYY-MM-DD. If year is missing, assume current year.
 - If a date is missing for some entries, use the last known date in the page

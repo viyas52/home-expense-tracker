@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Home Expenses</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#3730a3">
+    <meta name="theme-color" content="#065f46">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -14,23 +14,23 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --bg: #f0f2f5;
+            --bg: #f4f6f0;
             --bg-card: #ffffff;
-            --bg-card-hover: #f8fafc;
-            --bg-surface: #e8eaed;
+            --bg-card-hover: #f7faf5;
+            --bg-surface: #e9ece4;
             --bg-input: #ffffff;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-muted: #94a3b8;
+            --text-primary: #1a2e1a;
+            --text-secondary: #4a6349;
+            --text-muted: #8a9e89;
             --border: rgba(0,0,0,0.06);
             --border-strong: rgba(0,0,0,0.1);
             --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
             --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
             --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
             --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 0 1px rgba(0,0,0,0.08);
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --primary-light: rgba(99,102,241,0.1);
+            --primary: #0f766e;
+            --primary-dark: #0d6560;
+            --primary-light: rgba(15,118,110,0.1);
             --green: #10b981;
             --green-light: rgba(16,185,129,0.1);
             --amber: #f59e0b;
@@ -41,22 +41,22 @@
             --radius-sm: 10px;
             --radius-xs: 8px;
             --overlay: rgba(0,0,0,0.4);
-            --header-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #a855f7 100%);
-            --metric-1-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --metric-2-bg: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --metric-3-bg: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --fab-bg: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --header-gradient: linear-gradient(135deg, #065f46 0%, #0f766e 50%, #14b8a6 100%);
+            --metric-1-bg: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            --metric-2-bg: linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%);
+            --metric-3-bg: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            --fab-bg: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
         }
 
         [data-theme="dark"] {
-            --bg: #0f172a;
-            --bg-card: #1e293b;
-            --bg-card-hover: #263548;
-            --bg-surface: #1a2332;
-            --bg-input: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
+            --bg: #0c1a14;
+            --bg-card: #152420;
+            --bg-card-hover: #1c3029;
+            --bg-surface: #112019;
+            --bg-input: #152420;
+            --text-primary: #e8f5e9;
+            --text-secondary: #9cb89b;
+            --text-muted: #6b8a6a;
             --border: rgba(255,255,255,0.06);
             --border-strong: rgba(255,255,255,0.1);
             --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
@@ -64,10 +64,10 @@
             --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
             --shadow-card: 0 2px 8px rgba(0,0,0,0.3), 0 0 1px rgba(0,0,0,0.4);
             --overlay: rgba(0,0,0,0.6);
-            --header-gradient: linear-gradient(135deg, #312e81 0%, #5b21b6 50%, #7c3aed 100%);
-            --metric-1-bg: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
-            --metric-2-bg: linear-gradient(135deg, #be185d 0%, #9f1239 100%);
-            --metric-3-bg: linear-gradient(135deg, #0369a1 0%, #0891b2 100%);
+            --header-gradient: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #0f766e 100%);
+            --metric-1-bg: linear-gradient(135deg, #065f46 0%, #0f766e 100%);
+            --metric-2-bg: linear-gradient(135deg, #1e3a5f 0%, #0369a1 100%);
+            --metric-3-bg: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%);
         }
 
         body {
@@ -341,6 +341,24 @@
         }
         .txn-delete:hover { opacity: 1; color: var(--red); background: var(--red-light); }
 
+        /* SHOW MORE/LESS */
+        .show-toggle {
+            display: flex; align-items: center; justify-content: center;
+            gap: 6px; width: 100%;
+            padding: 14px; margin-top: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            color: var(--primary);
+            font-size: 13px; font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+            box-shadow: var(--shadow-sm);
+        }
+        .show-toggle:hover { background: var(--primary-light); }
+        .show-toggle svg { width: 16px; height: 16px; transition: transform 0.2s; }
+        .show-toggle.expanded svg { transform: rotate(180deg); }
+
         /* EMPTY STATE */
         .empty-state {
             text-align: center;
@@ -383,10 +401,10 @@
             border: none; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             z-index: 90;
-            box-shadow: 0 4px 16px rgba(99,102,241,0.4);
+            box-shadow: 0 4px 16px rgba(15,118,110,0.4);
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .fab:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(99,102,241,0.5); }
+        .fab:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(15,118,110,0.5); }
         .fab:active { transform: scale(0.95); }
         .fab svg { width: 26px; height: 26px; transition: transform 0.3s; }
         .fab.open svg { transform: rotate(45deg); }
@@ -429,7 +447,7 @@
         .fab-icon-btn svg { width: 22px; height: 22px; }
         .fab-icon-btn.photo { background: linear-gradient(135deg, #f59e0b, #ef4444); }
         .fab-icon-btn.upload { background: linear-gradient(135deg, #10b981, #059669); }
-        .fab-icon-btn.manual { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+        .fab-icon-btn.manual { background: linear-gradient(135deg, #d97706, #f59e0b); }
 
         .fab-overlay {
             position: fixed; inset: 0;
@@ -704,6 +722,37 @@
             border-radius: 12px; background: var(--bg-card);
             color: var(--text-muted);
         }
+        .history-actions {
+            display: flex; gap: 6px; margin-top: 8px;
+        }
+        .history-action-btn {
+            flex: 1; padding: 8px;
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-xs);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 11px; font-weight: 600;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 4px;
+            transition: all 0.15s;
+        }
+        .history-action-btn:hover { background: var(--primary-light); color: var(--primary); }
+        .history-action-btn svg { width: 14px; height: 14px; }
+
+        /* COLLAPSIBLE */
+        .collapsible-btn {
+            width: 100%; padding: 12px 0;
+            background: none; border: none;
+            display: flex; align-items: center; justify-content: space-between;
+            cursor: pointer; color: var(--text-primary);
+        }
+        .collapsible-btn span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
+        .collapsible-btn svg { width: 16px; height: 16px; color: var(--text-muted); transition: transform 0.2s; }
+        .collapsible-btn.open svg { transform: rotate(180deg); }
+        .collapsible-content {
+            display: none; padding-bottom: 4px;
+        }
+        .collapsible-content.open { display: block; }
 
         /* TOAST */
         .toast {
@@ -761,14 +810,14 @@
     <!-- Metrics -->
     <div class="metrics-row">
         <div class="metric-card">
-            <div class="metric-emoji">💸</div>
-            <div class="metric-value" id="metric-spent"><div class="skeleton skeleton-value"></div></div>
-            <div class="metric-label">Spent</div>
-        </div>
-        <div class="metric-card">
             <div class="metric-emoji">💰</div>
             <div class="metric-value" id="metric-remaining"><div class="skeleton skeleton-value"></div></div>
             <div class="metric-label">Remaining</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-emoji">💸</div>
+            <div class="metric-value" id="metric-spent"><div class="skeleton skeleton-value"></div></div>
+            <div class="metric-label">Spent</div>
         </div>
         <div class="metric-card">
             <div class="metric-emoji">📝</div>
@@ -958,20 +1007,25 @@
         </div>
     </div>
     <div class="settings-section">
-        <div class="settings-section-title">Backend</div>
-        <div class="settings-row">
-            <div>
-                <div class="settings-label">API server URL</div>
-                <div class="settings-desc">Where parse.py runs</div>
-            </div>
-            <input type="text" class="settings-input wide" id="settings-api" value="http://localhost:8000" onchange="updateApiUrl()">
-        </div>
-    </div>
-    <div class="settings-section">
         <div class="settings-section-title">Monthly History</div>
         <div id="history-list"></div>
         <div id="no-history-msg" style="text-align:center; padding:20px; color:var(--text-muted); font-size:13px;">
             No history yet
+        </div>
+    </div>
+    <div class="settings-section">
+        <button class="collapsible-btn" onclick="toggleAdvanced()">
+            <span>Advanced</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="collapsible-content" id="advanced-section">
+            <div class="settings-row">
+                <div>
+                    <div class="settings-label">API server URL</div>
+                    <div class="settings-desc">Where parse.py runs</div>
+                </div>
+                <input type="text" class="settings-input wide" id="settings-api" value="http://localhost:8000" onchange="updateApiUrl()">
+            </div>
         </div>
     </div>
     <div class="settings-section" style="border-bottom:none;">
@@ -979,7 +1033,7 @@
         <div class="settings-row">
             <div>
                 <div class="settings-label">Home Expenses</div>
-                <div class="settings-desc">v2.0 — Built for Amma</div>
+                <div class="settings-desc">v2.1 — Built for Amma</div>
             </div>
             <div style="font-size:13px; font-weight:600; color:var(--text-muted);">PWA</div>
         </div>
@@ -1005,14 +1059,14 @@ const CATEGORY_EMOJIS = {
     "Servant salary": "🏠", "Miscellaneous": "📦"
 };
 const CATEGORY_COLORS = [
-    "#6366f1", "#10b981", "#0ea5e9", "#f59e0b",
-    "#ec4899", "#f43f5e", "#14b8a6", "#f97316",
-    "#8b5cf6", "#ef4444", "#64748b"
+    "#0f766e", "#059669", "#0ea5e9", "#d97706",
+    "#ec4899", "#e11d48", "#2563eb", "#ea580c",
+    "#7c3aed", "#dc2626", "#64748b"
 ];
 const CATEGORY_BG_COLORS = [
-    "rgba(99,102,241,0.12)", "rgba(16,185,129,0.12)", "rgba(14,165,233,0.12)", "rgba(245,158,11,0.12)",
-    "rgba(236,72,153,0.12)", "rgba(244,63,94,0.12)", "rgba(20,184,166,0.12)", "rgba(249,115,22,0.12)",
-    "rgba(139,92,246,0.12)", "rgba(239,68,68,0.12)", "rgba(100,116,139,0.12)"
+    "rgba(15,118,110,0.12)", "rgba(5,150,105,0.12)", "rgba(14,165,233,0.12)", "rgba(217,119,6,0.12)",
+    "rgba(236,72,153,0.12)", "rgba(225,29,72,0.12)", "rgba(37,99,235,0.12)", "rgba(234,88,12,0.12)",
+    "rgba(124,58,237,0.12)", "rgba(220,38,38,0.12)", "rgba(100,116,139,0.12)"
 ];
 
 const firebaseConfig = {
@@ -1180,42 +1234,76 @@ function updateDashboard(entries) {
     // TRANSACTION LIST
     const container = document.getElementById('txn-list');
     const noMsg = document.getElementById('no-entries-msg');
+    window._allEntries = entries;
+    window._txnExpanded = false;
 
     if (entries.length === 0) {
         container.innerHTML = '';
         noMsg.style.display = 'block';
     } else {
         noMsg.style.display = 'none';
-        // Group by date
-        const groups = {};
-        entries.forEach(e => {
-            const d = e.date || 'unknown';
-            if (!groups[d]) groups[d] = [];
-            groups[d].push(e);
-        });
-        const sortedDates = Object.keys(groups).sort().reverse();
+        renderTransactions(entries, false);
+    }
+}
 
-        container.innerHTML = sortedDates.map(date => {
-            const rows = groups[date].map(e => {
-                const idx = getCategoryIndex(e.category);
-                return `<div class="txn-row">
-                    <div class="txn-icon" style="background:${CATEGORY_BG_COLORS[idx]}">${CATEGORY_EMOJIS[e.category] || '📦'}</div>
-                    <div class="txn-info">
-                        <div class="txn-note">${escHtml(e.note || e.category)}</div>
-                        <div class="txn-category">${escHtml(e.category)}</div>
-                    </div>
-                    <div class="txn-amount">₹${(e.amount || 0).toLocaleString('en-IN')}</div>
-                    <button class="txn-delete" onclick="deleteEntry('${e.id}')" title="Delete">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M6 18L18 6M6 6l12 12"/></svg>
-                    </button>
-                </div>`;
-            }).join('');
-            return `<div class="date-group">
-                <div class="date-label">${formatDateFull(date)}</div>
-                <div class="txn-card">${rows}</div>
+const TXN_LIMIT = 5;
+
+function renderTransactions(entries, expanded) {
+    const container = document.getElementById('txn-list');
+    const visible = expanded ? entries : entries.slice(0, TXN_LIMIT);
+    const hasMore = entries.length > TXN_LIMIT;
+
+    // Group by date
+    const groups = {};
+    visible.forEach(e => {
+        const d = e.date || 'unknown';
+        if (!groups[d]) groups[d] = [];
+        groups[d].push(e);
+    });
+    const sortedDates = Object.keys(groups).sort().reverse();
+
+    let html = sortedDates.map(date => {
+        const rows = groups[date].map(e => {
+            const idx = getCategoryIndex(e.category);
+            return `<div class="txn-row">
+                <div class="txn-icon" style="background:${CATEGORY_BG_COLORS[idx]}">${CATEGORY_EMOJIS[e.category] || '📦'}</div>
+                <div class="txn-info">
+                    <div class="txn-note">${escHtml(e.note || e.category)}</div>
+                    <div class="txn-category">${escHtml(e.category)}</div>
+                </div>
+                <div class="txn-amount">₹${(e.amount || 0).toLocaleString('en-IN')}</div>
+                <button class="txn-delete" onclick="deleteEntry('${e.id}')" title="Delete">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
             </div>`;
         }).join('');
+        return `<div class="date-group">
+            <div class="date-label">${formatDateFull(date)}</div>
+            <div class="txn-card">${rows}</div>
+        </div>`;
+    }).join('');
+
+    if (hasMore) {
+        const remaining = entries.length - TXN_LIMIT;
+        if (expanded) {
+            html += `<button class="show-toggle expanded" onclick="toggleTxnView()">
+                Show less
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 15l7-7 7 7"/></svg>
+            </button>`;
+        } else {
+            html += `<button class="show-toggle" onclick="toggleTxnView()">
+                Show ${remaining} more
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>`;
+        }
     }
+
+    container.innerHTML = html;
+}
+
+function toggleTxnView() {
+    window._txnExpanded = !window._txnExpanded;
+    renderTransactions(window._allEntries, window._txnExpanded);
 }
 
 async function deleteEntry(id) {
@@ -1423,7 +1511,16 @@ function updateApiUrl() {
     if (val) { API_URL = val; localStorage.setItem('het_api_url', val); showToast("API URL updated"); }
 }
 
+function toggleAdvanced() {
+    const btn = document.querySelector('.collapsible-btn');
+    const content = document.getElementById('advanced-section');
+    btn.classList.toggle('open');
+    content.classList.toggle('open');
+}
+
 // HISTORY
+let historyData = {};
+
 async function loadHistory() {
     if (!firebaseReady) return;
     try {
@@ -1431,15 +1528,15 @@ async function loadHistory() {
         const snapshot = await getDocs(collection(db, "expenses"));
         const all = [];
         snapshot.forEach(docSnap => all.push(docSnap.data()));
-        const months = {};
-        all.forEach(e => { const key = e.date ? e.date.substring(0, 7) : 'unknown'; if (!months[key]) months[key] = []; months[key].push(e); });
-        const sorted = Object.keys(months).sort().reverse();
+        historyData = {};
+        all.forEach(e => { const key = e.date ? e.date.substring(0, 7) : 'unknown'; if (!historyData[key]) historyData[key] = []; historyData[key].push(e); });
+        const sorted = Object.keys(historyData).sort().reverse();
         const container = document.getElementById('history-list');
         const noMsg = document.getElementById('no-history-msg');
         if (sorted.length === 0) { container.innerHTML = ''; noMsg.style.display = 'block'; return; }
         noMsg.style.display = 'none';
         container.innerHTML = sorted.map(key => {
-            const entries = months[key];
+            const entries = historyData[key];
             const total = entries.reduce((s, e) => s + (e.amount || 0), 0);
             const pct = Math.min(100, (total / BUDGET) * 100);
             const color = pct >= 90 ? 'var(--red)' : pct >= 70 ? 'var(--amber)' : 'var(--primary)';
@@ -1457,9 +1554,74 @@ async function loadHistory() {
                 <div class="history-cat-tags">
                     ${topCats.map(([c, amt]) => `<span class="history-cat-tag">${CATEGORY_EMOJIS[c] || '📦'} ₹${amt.toLocaleString('en-IN')}</span>`).join('')}
                 </div>
+                <div class="history-actions">
+                    <button class="history-action-btn" onclick="downloadMonth('${key}')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                        Download
+                    </button>
+                    <button class="history-action-btn" onclick="printMonth('${key}')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-1.913-.247M6.34 18H5.25A2.25 2.25 0 013 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 011.913-.247m0 0a48.159 48.159 0 018.5 0m-8.5 0V6.75a2 2 0 012-2h4.5a2 2 0 012 2v2.284"/></svg>
+                        Print
+                    </button>
+                </div>
             </div>`;
         }).join('');
     } catch (err) { console.error("History load failed:", err); }
+}
+
+function downloadMonth(monthKey) {
+    const entries = historyData[monthKey] || [];
+    if (entries.length === 0) { showToast("No entries to download"); return; }
+    const [y, m] = monthKey.split('-');
+    const label = new Date(y, m - 1).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+    const total = entries.reduce((s, e) => s + (e.amount || 0), 0);
+    const sorted = [...entries].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+    let csv = `Home Expenses - ${label}\n`;
+    csv += `Total: Rs.${total.toLocaleString('en-IN')} / Budget: Rs.${BUDGET.toLocaleString('en-IN')}\n\n`;
+    csv += `Date,Category,Item,Amount\n`;
+    sorted.forEach(e => {
+        csv += `${e.date || ''},${e.category || ''},${(e.note || '').replace(/,/g, ' ')},${e.amount || 0}\n`;
+    });
+    csv += `\n,,TOTAL,${total}\n`;
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `expenses_${monthKey}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast("Downloaded!");
+}
+
+function printMonth(monthKey) {
+    const entries = historyData[monthKey] || [];
+    if (entries.length === 0) { showToast("No entries to print"); return; }
+    const [y, m] = monthKey.split('-');
+    const label = new Date(y, m - 1).toLocaleDateString('en-IN', { month: 'long', year: 'numeric' });
+    const total = entries.reduce((s, e) => s + (e.amount || 0), 0);
+    const sorted = [...entries].sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+    const rows = sorted.map(e => `<tr>
+        <td style="padding:8px;border-bottom:1px solid #eee">${e.date || ''}</td>
+        <td style="padding:8px;border-bottom:1px solid #eee">${CATEGORY_EMOJIS[e.category] || ''} ${e.category || ''}</td>
+        <td style="padding:8px;border-bottom:1px solid #eee">${e.note || ''}</td>
+        <td style="padding:8px;border-bottom:1px solid #eee;text-align:right;font-weight:600">₹${(e.amount || 0).toLocaleString('en-IN')}</td>
+    </tr>`).join('');
+
+    const printWin = window.open('', '_blank');
+    printWin.document.write(`<!DOCTYPE html><html><head><title>Expenses - ${label}</title>
+        <style>body{font-family:Arial,sans-serif;padding:24px;color:#1a1a1a}
+        h1{font-size:20px;margin-bottom:4px} .sub{color:#666;margin-bottom:20px;font-size:14px}
+        table{width:100%;border-collapse:collapse} th{text-align:left;padding:10px 8px;border-bottom:2px solid #333;font-size:13px;text-transform:uppercase;color:#666}
+        .total-row td{border-top:2px solid #333;font-weight:700;padding:12px 8px;font-size:16px}</style></head>
+        <body><h1>Home Expenses — ${label}</h1>
+        <p class="sub">Budget: ₹${BUDGET.toLocaleString('en-IN')} | Spent: ₹${total.toLocaleString('en-IN')} | Remaining: ₹${(BUDGET - total).toLocaleString('en-IN')}</p>
+        <table><thead><tr><th>Date</th><th>Category</th><th>Item</th><th style="text-align:right">Amount</th></tr></thead>
+        <tbody>${rows}<tr class="total-row"><td colspan="3">Total</td><td style="text-align:right">₹${total.toLocaleString('en-IN')}</td></tr></tbody></table></body></html>`);
+    printWin.document.close();
+    printWin.print();
 }
 
 // UTILITIES
@@ -1473,11 +1635,7 @@ function formatDateFull(dateStr) {
     if (!dateStr) return '';
     const [y, m, d] = dateStr.split('-');
     const date = new Date(y, m - 1, d);
-    const today = new Date();
-    const yesterday = new Date(today); yesterday.setDate(today.getDate() - 1);
-    if (date.toDateString() === today.toDateString()) return 'Today';
-    if (date.toDateString() === yesterday.toDateString()) return 'Yesterday';
-    return date.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+    return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 function showToast(msg) {
     const toast = document.getElementById('toast');
