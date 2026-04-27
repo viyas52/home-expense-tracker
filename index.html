@@ -790,22 +790,25 @@
 let API_URL = localStorage.getItem('het_api_url') || "http://localhost:8000";
 let BUDGET = parseInt(localStorage.getItem('het_budget')) || 18000;
 const CATEGORIES = [
-    "Groceries", "Vegetables & fruits", "Milk & dairy", "Cooking gas",
-    "Electricity bill", "Water & maintenance", "Medical", "Transport",
-    "Temple & festivals", "Miscellaneous"
+    "Provision", "Vegetables", "Milk & cream", "Non-veg",
+    "Snacks", "Flower", "Toiletries", "Detergents",
+    "Iron", "Servant salary", "Miscellaneous"
 ];
 const CATEGORY_EMOJIS = {
-    "Groceries": "🛒", "Vegetables & fruits": "🥬", "Milk & dairy": "🥛",
-    "Cooking gas": "🔥", "Electricity bill": "⚡", "Water & maintenance": "🚰",
-    "Medical": "💊", "Transport": "🚌", "Temple & festivals": "🛕", "Miscellaneous": "📦"
+    "Provision": "🍚", "Vegetables": "🥬", "Milk & cream": "🥛",
+    "Non-veg": "🍗", "Snacks": "🍿", "Flower": "🌺",
+    "Toiletries": "🧴", "Detergents": "🧹", "Iron": "👔",
+    "Servant salary": "🏠", "Miscellaneous": "📦"
 };
 const CATEGORY_COLORS = [
     "#4f46e5", "#059669", "#0891b2", "#d97706",
-    "#7c3aed", "#0d9488", "#dc2626", "#ea580c", "#db2777", "#64748b"
+    "#7c3aed", "#db2777", "#0d9488", "#ea580c",
+    "#6366f1", "#dc2626", "#64748b"
 ];
 const CATEGORY_BG_COLORS = [
     "#eef2ff", "#ecfdf5", "#ecfeff", "#fffbeb",
-    "#f5f3ff", "#f0fdfa", "#fef2f2", "#fff7ed", "#fdf2f8", "#f8fafc"
+    "#f5f3ff", "#fdf2f8", "#f0fdfa", "#fff7ed",
+    "#eef2ff", "#fef2f2", "#f8fafc"
 ];
 
 const firebaseConfig = {

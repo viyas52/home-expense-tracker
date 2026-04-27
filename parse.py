@@ -17,15 +17,16 @@ app.add_middleware(
 client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
 CATEGORIES = [
-    "Groceries",
-    "Vegetables & fruits",
-    "Milk & dairy",
-    "Cooking gas",
-    "Electricity bill",
-    "Water & maintenance",
-    "Medical",
-    "Transport",
-    "Temple & festivals",
+    "Provision",
+    "Vegetables",
+    "Milk & cream",
+    "Non-veg",
+    "Snacks",
+    "Flower",
+    "Toiletries",
+    "Detergents",
+    "Iron",
+    "Servant salary",
     "Miscellaneous",
 ]
 
@@ -36,6 +37,19 @@ Entries follow a date-wise format, for example:
   அரிசி 180, காய்கறி 95
 
 Your job is to extract every expense entry and return structured JSON.
+
+Category mapping guide:
+- Provision = rice, dal, spices, bread, oil, sugar, atta, staples
+- Vegetables = all vegetables and fruits
+- Milk & cream = milk, curd, cream, paneer, butter
+- Non-veg = chicken, mutton, fish, eggs, prawns
+- Snacks = chips, biscuits, bakery items, tea snacks, sweets
+- Flower = pooja flowers, garlands, malligai
+- Toiletries = harpic, brush, soap, shampoo, toothpaste
+- Detergents = dish wash, washing machine liquid, vim, surf
+- Iron = clothes ironing, pressing, laundry
+- Servant salary = maid, house cleaner, toilet cleaner, cook salary
+- Miscellaneous = anything that doesn't fit above
 
 Rules:
 - Map each item to the closest category from this list: """ + ", ".join(CATEGORIES) + """
@@ -50,7 +64,7 @@ Output format:
   "entries": [
     {
       "date": "2026-04-14",
-      "category": "Milk & dairy",
+      "category": "Milk & cream",
       "note": "milk",
       "amount": 60
     }
