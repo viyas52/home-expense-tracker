@@ -4,8 +4,8 @@
     "description": "Track household expenses against monthly budget",
     "start_url": "./index.html",
     "display": "standalone",
-    "background_color": "#f4f6f0",
-    "theme_color": "#065f46",
+    "background_color": "#faf5f4",
+    "theme_color": "#8B3A3A",
     "orientation": "portrait",
     "icons": [
         {

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Home Expenses</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#065f46">
+    <meta name="theme-color" content="#8B3A3A">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -14,23 +14,23 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --bg: #f4f6f0;
+            --bg: #faf5f4;
             --bg-card: #ffffff;
-            --bg-card-hover: #f7faf5;
-            --bg-surface: #e9ece4;
+            --bg-card-hover: #fdf8f7;
+            --bg-surface: #f0e6e4;
             --bg-input: #ffffff;
-            --text-primary: #1a2e1a;
-            --text-secondary: #4a6349;
-            --text-muted: #8a9e89;
+            --text-primary: #2e1a1a;
+            --text-secondary: #6b4a4a;
+            --text-muted: #9e8888;
             --border: rgba(0,0,0,0.06);
             --border-strong: rgba(0,0,0,0.1);
             --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
             --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
             --shadow-lg: 0 8px 24px rgba(0,0,0,0.08);
             --shadow-card: 0 2px 8px rgba(0,0,0,0.06), 0 0 1px rgba(0,0,0,0.08);
-            --primary: #0f766e;
-            --primary-dark: #0d6560;
-            --primary-light: rgba(15,118,110,0.1);
+            --primary: #B85C57;
+            --primary-dark: #9E4A45;
+            --primary-light: rgba(184,92,87,0.1);
             --green: #10b981;
             --green-light: rgba(16,185,129,0.1);
             --amber: #f59e0b;
@@ -41,22 +41,22 @@
             --radius-sm: 10px;
             --radius-xs: 8px;
             --overlay: rgba(0,0,0,0.4);
-            --header-gradient: linear-gradient(135deg, #065f46 0%, #0f766e 50%, #14b8a6 100%);
-            --metric-1-bg: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            --header-gradient: linear-gradient(135deg, #8B3A3A 0%, #B85C57 50%, #D4807B 100%);
+            --metric-1-bg: linear-gradient(135deg, #B85C57 0%, #D4807B 100%);
             --metric-2-bg: linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%);
             --metric-3-bg: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
-            --fab-bg: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            --fab-bg: linear-gradient(135deg, #B85C57 0%, #D4807B 100%);
         }
 
         [data-theme="dark"] {
-            --bg: #0c1a14;
-            --bg-card: #152420;
-            --bg-card-hover: #1c3029;
-            --bg-surface: #112019;
-            --bg-input: #152420;
-            --text-primary: #e8f5e9;
-            --text-secondary: #9cb89b;
-            --text-muted: #6b8a6a;
+            --bg: #1a0c0c;
+            --bg-card: #241515;
+            --bg-card-hover: #301c1c;
+            --bg-surface: #201111;
+            --bg-input: #241515;
+            --text-primary: #f5e8e8;
+            --text-secondary: #b89c9c;
+            --text-muted: #8a6b6b;
             --border: rgba(255,255,255,0.06);
             --border-strong: rgba(255,255,255,0.1);
             --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
@@ -64,8 +64,8 @@
             --shadow-lg: 0 8px 24px rgba(0,0,0,0.4);
             --shadow-card: 0 2px 8px rgba(0,0,0,0.3), 0 0 1px rgba(0,0,0,0.4);
             --overlay: rgba(0,0,0,0.6);
-            --header-gradient: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #0f766e 100%);
-            --metric-1-bg: linear-gradient(135deg, #065f46 0%, #0f766e 100%);
+            --header-gradient: linear-gradient(135deg, #6B2D2D 0%, #8B3A3A 50%, #B85C57 100%);
+            --metric-1-bg: linear-gradient(135deg, #8B3A3A 0%, #B85C57 100%);
             --metric-2-bg: linear-gradient(135deg, #1e3a5f 0%, #0369a1 100%);
             --metric-3-bg: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%);
         }
@@ -1059,12 +1059,12 @@ const CATEGORY_EMOJIS = {
     "Servant salary": "🏠", "Miscellaneous": "📦"
 };
 const CATEGORY_COLORS = [
-    "#0f766e", "#059669", "#0ea5e9", "#d97706",
+    "#B85C57", "#059669", "#0ea5e9", "#d97706",
     "#ec4899", "#e11d48", "#2563eb", "#ea580c",
     "#7c3aed", "#dc2626", "#64748b"
 ];
 const CATEGORY_BG_COLORS = [
-    "rgba(15,118,110,0.12)", "rgba(5,150,105,0.12)", "rgba(14,165,233,0.12)", "rgba(217,119,6,0.12)",
+    "rgba(184,92,87,0.12)", "rgba(5,150,105,0.12)", "rgba(14,165,233,0.12)", "rgba(217,119,6,0.12)",
     "rgba(236,72,153,0.12)", "rgba(225,29,72,0.12)", "rgba(37,99,235,0.12)", "rgba(234,88,12,0.12)",
     "rgba(124,58,237,0.12)", "rgba(220,38,38,0.12)", "rgba(100,116,139,0.12)"
 ];
