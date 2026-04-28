@@ -42,7 +42,7 @@
             --radius-xs: 8px;
             --overlay: rgba(0,0,0,0.4);
             --header-gradient: linear-gradient(135deg, #8B3A3A 0%, #B85C57 50%, #D4807B 100%);
-            --metric-1-bg: linear-gradient(135deg, #B85C57 0%, #D4807B 100%);
+            --metric-1-bg: linear-gradient(135deg, #059669 0%, #10b981 100%);
             --metric-2-bg: linear-gradient(135deg, #0369a1 0%, #0ea5e9 100%);
             --metric-3-bg: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
             --fab-bg: linear-gradient(135deg, #B85C57 0%, #D4807B 100%);
@@ -65,7 +65,7 @@
             --shadow-card: 0 2px 8px rgba(0,0,0,0.3), 0 0 1px rgba(0,0,0,0.4);
             --overlay: rgba(0,0,0,0.6);
             --header-gradient: linear-gradient(135deg, #6B2D2D 0%, #8B3A3A 50%, #B85C57 100%);
-            --metric-1-bg: linear-gradient(135deg, #8B3A3A 0%, #B85C57 100%);
+            --metric-1-bg: linear-gradient(135deg, #047857 0%, #059669 100%);
             --metric-2-bg: linear-gradient(135deg, #1e3a5f 0%, #0369a1 100%);
             --metric-3-bg: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%);
         }
@@ -1177,6 +1177,38 @@ function getCategoryIndex(cat) {
     return idx >= 0 ? idx : CATEGORIES.length - 1;
 }
 
+function lerpColor(a, b, t) {
+    const ah = parseInt(a.slice(1), 16), bh = parseInt(b.slice(1), 16);
+    const ar = (ah >> 16) & 0xff, ag = (ah >> 8) & 0xff, ab = ah & 0xff;
+    const br = (bh >> 16) & 0xff, bg = (bh >> 8) & 0xff, bb = bh & 0xff;
+    const rr = Math.round(ar + (br - ar) * t), rg = Math.round(ag + (bg - ag) * t), rb = Math.round(ab + (bb - ab) * t);
+    return `#${((1 << 24) + (rr << 16) + (rg << 8) + rb).toString(16).slice(1)}`;
+}
+
+function updateAppColor(pct) {
+    // Green (#059669) at 0% usage → Amber (#d97706) at 60% → Red (#dc2626) at 100%
+    let colorDark, colorMid, colorLight;
+    if (pct <= 60) {
+        const t = pct / 60;
+        colorDark = lerpColor('#047857', '#b45309', t);
+        colorMid = lerpColor('#059669', '#d97706', t);
+        colorLight = lerpColor('#10b981', '#f59e0b', t);
+    } else {
+        const t = (pct - 60) / 40;
+        colorDark = lerpColor('#b45309', '#991b1b', t);
+        colorMid = lerpColor('#d97706', '#dc2626', t);
+        colorLight = lerpColor('#f59e0b', '#ef4444', t);
+    }
+
+    const root = document.documentElement;
+    root.style.setProperty('--header-gradient', `linear-gradient(135deg, ${colorDark} 0%, ${colorMid} 50%, ${colorLight} 100%)`);
+    root.style.setProperty('--fab-bg', `linear-gradient(135deg, ${colorMid} 0%, ${colorLight} 100%)`);
+    root.style.setProperty('--primary', colorMid);
+    root.style.setProperty('--primary-dark', colorDark);
+    root.style.setProperty('--primary-light', `${colorMid}1a`);
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', colorDark);
+}
+
 function updateDashboard(entries) {
     const total = entries.reduce((sum, e) => sum + (e.amount || 0), 0);
     const remaining = BUDGET - total;
@@ -1193,6 +1225,9 @@ function updateDashboard(entries) {
     fill.style.width = `${pct}%`;
     fill.className = 'progress-bar-fill' + (pct >= 90 ? ' danger' : pct >= 70 ? ' warning' : '');
     document.getElementById('progress-pct').textContent = `${Math.round(pct)}%`;
+
+    // DYNAMIC APP COLOR based on usage
+    updateAppColor(pct);
 
     // CATEGORY CHART
     const catTotals = {};
@@ -1217,9 +1252,9 @@ function updateDashboard(entries) {
                 datasets: [{ data: chartData, backgroundColor: chartColors, borderWidth: 0, hoverOffset: 6, borderRadius: 4 }]
             },
             options: {
-                responsive: true, maintainAspectRatio: false, cutout: '68%',
+                responsive: true, maintainAspectRatio: false, cutout: '80%',
                 plugins: {
-                    legend: { position: 'bottom', labels: { padding: 12, usePointStyle: true, pointStyleWidth: 8, color: textColor, font: { size: 12, weight: '600', family: 'Inter' } } },
+                    legend: { position: 'bottom', labels: { padding: 12, usePointStyle: true, pointStyle: 'circle', pointStyleWidth: 8, color: textColor, font: { size: 12, weight: '600', family: 'Inter' } } },
                     tooltip: {
                         backgroundColor: darkMode ? '#334155' : '#1e293b',
                         titleFont: { family: 'Inter', weight: '600' }, bodyFont: { family: 'Inter' },
