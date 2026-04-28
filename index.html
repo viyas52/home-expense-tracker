@@ -329,17 +329,24 @@
             white-space: nowrap;
             letter-spacing: -0.3px;
         }
-        .txn-delete {
+        .txn-actions {
+            display: flex;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .txn-action-btn {
             background: none; border: none;
             color: var(--text-muted);
-            cursor: pointer; padding: 10px;
+            cursor: pointer; padding: 8px;
             border-radius: var(--radius-xs);
             transition: all 0.15s;
-            min-width: 44px; min-height: 44px;
+            min-width: 36px; min-height: 36px;
             display: flex; align-items: center; justify-content: center;
             opacity: 0.4;
         }
-        .txn-delete:hover { opacity: 1; color: var(--red); background: var(--red-light); }
+        .txn-action-btn:hover { opacity: 1; }
+        .txn-action-btn.edit:hover { color: var(--primary); background: var(--primary-light); }
+        .txn-action-btn.delete:hover { color: var(--red); background: var(--red-light); }
 
         /* SHOW MORE/LESS */
         .show-toggle {
@@ -971,7 +978,7 @@
 <div class="modal-overlay" id="manual-modal" onclick="closeManualModal(event)">
     <div class="modal" onclick="event.stopPropagation()">
         <div class="modal-header">
-            <h2>Add entry</h2>
+            <h2 id="manual-modal-title">Add entry</h2>
             <button class="modal-close" onclick="closeManualModal()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
@@ -995,7 +1002,7 @@
                 <label>Note</label>
                 <input type="text" id="add-note" placeholder="e.g. milk, rice, vegetables">
             </div>
-            <button class="btn btn-primary btn-full" onclick="addManualEntry()">Add entry</button>
+            <button class="btn btn-primary btn-full" id="manual-modal-btn" onclick="addManualEntry()">Add entry</button>
         </div>
     </div>
 </div>
@@ -1121,11 +1128,11 @@ function toggleTheme() {
 async function initFirebase() {
     try {
         const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
-        const { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, where, Timestamp }
+        const { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc, doc, query, orderBy, where, Timestamp }
             = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
         const app = initializeApp(firebaseConfig);
         db = getFirestore(app);
-        window.fb = { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, where, Timestamp };
+        window.fb = { collection, addDoc, getDocs, deleteDoc, updateDoc, doc, query, orderBy, where, Timestamp };
         firebaseReady = true;
         populateMonthSelector();
         loadMonth();
@@ -1257,7 +1264,7 @@ function updateDashboard(entries) {
     CATEGORIES.forEach(c => catTotals[c] = 0);
     entries.forEach(e => { catTotals[CATEGORIES.includes(e.category) ? e.category : 'Miscellaneous'] += e.amount || 0; });
 
-    const activeCats = CATEGORIES.filter(c => catTotals[c] > 0);
+    const activeCats = CATEGORIES.filter(c => catTotals[c] > 0).sort((a, b) => catTotals[a] - catTotals[b]);
     const chartData = activeCats.map(c => catTotals[c]);
     const chartColors = activeCats.map(c => CATEGORY_COLORS[CATEGORIES.indexOf(c)]);
 
@@ -1275,7 +1282,7 @@ function updateDashboard(entries) {
                 datasets: [{ data: chartData, backgroundColor: chartColors, borderWidth: 0, hoverOffset: 6, borderRadius: 4 }]
             },
             options: {
-                responsive: true, maintainAspectRatio: false, cutout: '80%',
+                responsive: true, maintainAspectRatio: false, cutout: '85%',
                 plugins: {
                     legend: { display: false },
                     tooltip: {
@@ -1338,9 +1345,14 @@ function renderTransactions(entries, expanded) {
                     <div class="txn-category">${escHtml(e.category)}</div>
                 </div>
                 <div class="txn-amount">₹${(e.amount || 0).toLocaleString('en-IN')}</div>
-                <button class="txn-delete" onclick="deleteEntry('${e.id}')" title="Delete">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
+                <div class="txn-actions">
+                    <button class="txn-action-btn edit" onclick="editEntry('${e.id}','${escHtml(e.date||'')}','${escHtml(e.category||'')}','${escHtml(e.note||'')}',${e.amount||0})" title="Edit">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                    <button class="txn-action-btn delete" onclick="deleteEntry('${e.id}')" title="Delete">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
             </div>`;
         }).join('');
         return `<div class="date-group">
@@ -1516,17 +1528,39 @@ async function modalConfirmEntries() {
 }
 
 // MANUAL ENTRY MODAL
+let editingEntryId = null;
+
 function openManualModal() {
     closeFab();
+    editingEntryId = null;
+    document.getElementById('manual-modal-title').textContent = 'Add entry';
+    document.getElementById('manual-modal-btn').textContent = 'Add entry';
+    document.getElementById('manual-modal-btn').onclick = addManualEntry;
     document.getElementById('manual-modal').classList.add('active');
     document.body.style.overflow = 'hidden';
     document.getElementById('add-date').value = new Date().toISOString().split('T')[0];
+    document.getElementById('add-amount').value = '';
+    document.getElementById('add-note').value = '';
+}
+
+function editEntry(id, date, category, note, amount) {
+    editingEntryId = id;
+    document.getElementById('manual-modal-title').textContent = 'Edit entry';
+    document.getElementById('manual-modal-btn').textContent = 'Save changes';
+    document.getElementById('manual-modal-btn').onclick = saveEditedEntry;
+    document.getElementById('add-date').value = date;
+    document.getElementById('add-amount').value = amount;
+    document.getElementById('add-category').value = category;
+    document.getElementById('add-note').value = note;
+    document.getElementById('manual-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
 
 function closeManualModal(e) {
     if (e && e.target !== document.getElementById('manual-modal')) return;
     document.getElementById('manual-modal').classList.remove('active');
     document.body.style.overflow = '';
+    editingEntryId = null;
 }
 
 async function addManualEntry() {
@@ -1545,6 +1579,22 @@ async function addManualEntry() {
         closeManualModal();
         loadMonth(); loadHistory();
     } catch (err) { showToast("Add failed"); }
+}
+
+async function saveEditedEntry() {
+    if (!firebaseReady || !editingEntryId) { showToast("Cannot update"); return; }
+    const date = document.getElementById('add-date').value;
+    const amount = parseFloat(document.getElementById('add-amount').value);
+    const category = document.getElementById('add-category').value;
+    const note = document.getElementById('add-note').value.trim();
+    if (!date || !amount || amount <= 0) { showToast("Fill in date and amount"); return; }
+    try {
+        const { doc, updateDoc } = window.fb;
+        await updateDoc(doc(db, "expenses", editingEntryId), { date, category, note: note || category, amount });
+        showToast("Entry updated!");
+        closeManualModal();
+        loadMonth(); loadHistory();
+    } catch (err) { showToast("Update failed"); }
 }
 
 // SETTINGS

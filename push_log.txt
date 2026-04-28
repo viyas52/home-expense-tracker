@@ -1,0 +1,6 @@
+To https://github.com/viyas52/home-expense-tracker.git
+   7795b5b..d85a7c5  main -> main
+--- 
+d85a7c5 v2.5: Fix header top line, neutral backgrounds, safe-area padding
+7795b5b v2.4: Remove purple entries card, custom pill-chip legend for donut chart
+7940129 v2.3: Slim donut, green remaining card, dynamic color based on budget usage
