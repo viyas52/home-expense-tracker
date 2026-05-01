@@ -1056,7 +1056,7 @@
                     <div class="settings-label">API server URL</div>
                     <div class="settings-desc">Where parse.py runs</div>
                 </div>
-                <input type="text" class="settings-input wide" id="settings-api" value="http://localhost:8000" onchange="updateApiUrl()">
+                <input type="text" class="settings-input wide" id="settings-api" value="https://home-expense-tracker-7m66.onrender.com" onchange="updateApiUrl()">
             </div>
         </div>
     </div>
@@ -1077,7 +1077,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-let API_URL = localStorage.getItem('het_api_url') || "http://localhost:8000";
+let API_URL = localStorage.getItem('het_api_url') || "https://home-expense-tracker-7m66.onrender.com";
 let BUDGET = parseInt(localStorage.getItem('het_budget')) || 18000;
 let darkMode = localStorage.getItem('het_dark') === 'true';
 
