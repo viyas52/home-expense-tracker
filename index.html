@@ -1058,6 +1058,13 @@
                 </div>
                 <input type="text" class="settings-input wide" id="settings-api" value="https://home-expense-tracker-7m66.onrender.com" onchange="updateApiUrl()">
             </div>
+            <div class="settings-row">
+                <div>
+                    <div class="settings-label">API key</div>
+                    <div class="settings-desc">Secret key to authenticate with the server</div>
+                </div>
+                <input type="password" class="settings-input wide" id="settings-apikey" placeholder="Enter API key" onchange="updateApiKey()">
+            </div>
         </div>
     </div>
 
@@ -1078,6 +1085,7 @@
 
 <script>
 let API_URL = localStorage.getItem('het_api_url') || "https://home-expense-tracker-7m66.onrender.com";
+let API_KEY = localStorage.getItem('het_api_key') || "";
 let BUDGET = parseInt(localStorage.getItem('het_budget')) || 18000;
 let darkMode = localStorage.getItem('het_dark') === 'true';
 
@@ -1477,7 +1485,7 @@ async function modalParseImage() {
     const formData = new FormData();
     formData.append('file', modalFile);
     try {
-        const res = await fetch(`${API_URL}/parse`, { method: 'POST', body: formData });
+        const res = await fetch(`${API_URL}/parse`, { method: 'POST', body: formData, headers: { 'X-Api-Key': API_KEY } });
         if (!res.ok) { const err = await res.json(); throw new Error(err.detail || 'Parse failed'); }
         const data = await res.json();
         modalParsedEntries = data.entries || [];
@@ -1631,6 +1639,11 @@ function updateApiUrl() {
     if (val) { API_URL = val; localStorage.setItem('het_api_url', val); showToast("API URL updated"); }
 }
 
+function updateApiKey() {
+    const val = document.getElementById('settings-apikey').value.trim();
+    if (val) { API_KEY = val; localStorage.setItem('het_api_key', val); showToast("API key saved"); }
+}
+
 function toggleAdvanced() {
     const btn = document.querySelector('.collapsible-btn');
     const content = document.getElementById('advanced-section');
@@ -1766,6 +1779,7 @@ function showToast(msg) {
 // HYDRATE
 document.getElementById('settings-budget').value = BUDGET;
 document.getElementById('settings-api').value = API_URL;
+if (API_KEY) document.getElementById('settings-apikey').value = API_KEY;
 document.getElementById('header-budget').textContent = `₹${BUDGET.toLocaleString('en-IN')}/mo`;
 document.getElementById('progress-budget-label').textContent = `of ₹${BUDGET.toLocaleString('en-IN')} budget`;
 initTheme();

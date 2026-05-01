@@ -1,7 +1,8 @@
 import os
 import base64
 import json
-from fastapi import FastAPI, File, UploadFile, HTTPException
+import secrets
+from fastapi import FastAPI, File, UploadFile, HTTPException, Header
 from fastapi.middleware.cors import CORSMiddleware
 from anthropic import Anthropic
 
@@ -9,10 +10,12 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://viyas52.github.io"],
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
+
+API_SECRET = os.environ.get("API_SECRET", "")
 
 client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
@@ -76,7 +79,9 @@ Output format:
 
 
 @app.post("/parse")
-async def parse_image(file: UploadFile = File(...)):
+async def parse_image(file: UploadFile = File(...), x_api_key: str = Header(None)):
+    if not API_SECRET or not secrets.compare_digest(x_api_key or "", API_SECRET):
+        raise HTTPException(status_code=401, detail="Unauthorized")
     if file.content_type not in ["image/jpeg", "image/png", "image/webp", "image/heic"]:
         raise HTTPException(status_code=400, detail="Only image files are accepted (JPEG, PNG, WEBP, HEIC)")
 
